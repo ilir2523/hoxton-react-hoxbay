@@ -1,34 +1,72 @@
-function Basket() {
+function Basket({ basketItems, setBasketItems}) {
+
+    function handleChange(item, e) {
+        let basketItemsQty = JSON.parse(JSON.stringify(basketItems))
+        const itemFound = basketItemsQty.find(function (basketItem) {
+            return basketItem.id === item.id
+          })
+          itemFound.quantity = Number(e.target.value)
+          console.log(e.target.value)
+
+          if (itemFound.quantity === 0) {
+            basketItemsQty = basketItemsQty.filter(function (basketItem) {
+              return basketItem.quantity > 0
+            })
+          }
+
+        setBasketItems(basketItemsQty)
+    }
+
+    console.log(basketItems)
+
+    function calculateTotalPrice() {
+        let total = 0
+        for (const item of basketItems) {
+          total = total + item.price * item.quantity
+        }
+        return total.toFixed(2)
+    }
+
+    function calculateItemPrice(item) {
+        let total = 0
+        total = total + item.price * item.quantity
+        return total.toFixed(2)
+      }
+
     return (
         <section className="basket-container">
             <h2>Your Basket</h2>
             <ul>
-                {/* <!-- Basket Item --> */}
-                <li>
-                    <article className="basket-container__item">
-                        <img
-                            src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
-                            alt="Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops"
-                            width="90"
-                        />
-                        <p>Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops</p>
-                        <p>
-                            Qty:
-                            <select>
-                                <option value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                            </select>
-                        </p>
-                        {/* <!-- The item total is calculated using the Qty selected value --> */}
-                        <p>Item total: £109.95</p>
-                    </article>
-                </li>
+                {basketItems.map(basketItem => 
+                    <li key={basketItem.id}>
+                        <article className="basket-container__item">
+                            <img
+                                src={basketItem.image}
+                                alt={basketItem.title}
+                                width="90"
+                            />
+                            <p>{basketItem.title}</p>
+                            <p>
+                                Qty:
+                                <select value={basketItem.quantity} onChange={(e) => {
+                                    handleChange(basketItem, e)
+                                    } }>
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                </select>
+                            </p>
+                            {/* <!-- The item total is calculated using the Qty selected value --> */}
+                            <p>Item total: £{calculateItemPrice(basketItem)}</p>
+                        </article>
+                    </li>
+
+                )}
+
 
             </ul>
-            {/* <!-- Basket total is calculated using each item's total from above --> */}
-            <h3>Your total: £109.95</h3>
+            <h3>Your total: £{calculateTotalPrice()}</h3>
         </section>
     )
 }

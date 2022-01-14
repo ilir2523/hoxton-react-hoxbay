@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
-function ProductDetails() {
+const randColour = () =>
+  ["green", "red", "blue", "yellow"][Math.floor(Math.random() * 4)]
+
+function ProductDetails({addToBasket}) {
   const params = useParams()
 
   const [product, setProduct] = useState(null)
-
-  const [basketItem, setBasketItem] = useState([])
 
   useEffect(() => {
     fetch(`http://localhost:3000/products/${params.id}`)
@@ -24,7 +25,7 @@ function ProductDetails() {
           src={product.image}
           alt={product.title}
         />
-        <div className="product-detail__side" style = {{borderColor: "yellow"}}>
+        <div className="product-detail__side" style = {{ ["--border-colour"]: `var(--${randColour()})` }}>
           <h3></h3>
           <h2>{product.title}</h2>
           <p>
@@ -33,7 +34,7 @@ function ProductDetails() {
           <p>£{product.price}</p>
           {/* <!-- Once you click in this button, the user should be redirected to the Basket page --> */}
           <Link to='/basket'>
-            <button>Add to basket</button>
+            <button onClick={() => addToBasket(product)}>Add to basket</button>
           </Link>
         </div>
       </section>
