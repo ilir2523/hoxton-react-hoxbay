@@ -1,13 +1,22 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { useState } from "react/cjs/react.development";
+import { useEffect, useState } from "react"
 import Header from "./components/Header";
 import Basket from "./pages/Basket";
 import Categories from "./pages/Categories";
+import CategoriesFiltered from "./pages/CategoriesFiltered";
 import NotFound from "./pages/NotFound";
 import ProductDetails from "./pages/ProductDetails";
 import Products from "./pages/Products";
 
 function App() {
+  const [products, setProducts] = useState([])
+
+  useEffect(() => {
+      fetch('http://localhost:3000/products')
+          .then(resp => resp.json())
+          .then(productsFromServer => setProducts(productsFromServer))
+  }, [])
+
 
   const [basketItems, setBasketItems] = useState([])
 
@@ -40,11 +49,11 @@ function App() {
       <main>
         <Routes>
           <Route index element={<Navigate to='/products' /> } />
-          <Route path='/products' element={<Products />} />
+          <Route path='/products' element={<Products products={products} />} />
           <Route path='/products/:id' element={<ProductDetails addToBasket={addToBasket} /> } />
 
           <Route path='/categories' element={<Categories />} />
-          <Route path='/categories/:id' element={<Products />} />
+          <Route path='/categories/:id' element={<CategoriesFiltered products={products} />} />
           <Route path='/basket' element={<Basket basketItems={basketItems} setBasketItems={setBasketItems} />} />
           <Route path='*' element={<NotFound />} />
         </Routes>

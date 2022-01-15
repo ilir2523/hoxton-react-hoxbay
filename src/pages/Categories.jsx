@@ -11,7 +11,7 @@ function Categories() {
             .then(categoriesFromServer => setCategories(categoriesFromServer))
     }, [])
 
-    console.log(categories)
+    // console.log(categories)
 
     return (
         <section className="categories-container main-wrapper">

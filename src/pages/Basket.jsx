@@ -17,7 +17,7 @@ function Basket({ basketItems, setBasketItems}) {
         setBasketItems(basketItemsQty)
     }
 
-    console.log(basketItems)
+    // console.log(basketItems)
 
     function calculateTotalPrice() {
         let total = 0
