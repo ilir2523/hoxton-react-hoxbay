@@ -15,9 +15,9 @@ function Categories() {
 
     return (
         <section className="categories-container main-wrapper">
-            <ul className="categories-container__list">
+            <ul className="categories-container__list" >
                 {categories.map(category => 
-                    <Category category={category} key={category.id} />
+                    <Category category={category} key={category.id}   />
                 )}
             </ul>
         </section>
