@@ -12,9 +12,9 @@ function App() {
   const [products, setProducts] = useState([])
 
   useEffect(() => {
-      fetch('http://localhost:3000/products')
-          .then(resp => resp.json())
-          .then(productsFromServer => setProducts(productsFromServer))
+    fetch('http://localhost:3000/products')
+      .then(resp => resp.json())
+      .then(productsFromServer => setProducts(productsFromServer))
   }, [])
 
 
@@ -36,21 +36,32 @@ function App() {
         categoryId: item.categoryId,
         image: item.image,
         quantity: 1
-      } 
+      }
       basketItemsList.push(newBasketItem)
+    }
+    setBasketItems(basketItemsList)
   }
-  setBasketItems(basketItemsList)
-}
 
+  function filterProducts(searchValue) {
+    let productsList = JSON.parse(JSON.stringify(products))
+    if (searchValue !== '') {
+      const productsListFilter = productsList.filter(product =>
+        product.title.toLowerCase().includes(searchValue)
+      )
+      setProducts(productsListFilter)
+    } else {fetch('http://localhost:3000/products')
+    .then(resp => resp.json())
+    .then(productsFromServer => setProducts(productsFromServer))}
+  }
 
   return (
     <>
-      <Header />
+      <Header filterProducts={filterProducts} />
       <main>
         <Routes>
-          <Route index element={<Navigate to='/products' /> } />
+          <Route index element={<Navigate to='/products' />} />
           <Route path='/products' element={<Products products={products} />} />
-          <Route path='/products/:id' element={<ProductDetails addToBasket={addToBasket} /> } />
+          <Route path='/products/:id' element={<ProductDetails addToBasket={addToBasket} />} />
 
           <Route path='/categories' element={<Categories />} />
           <Route path='/categories/:id' element={<CategoriesFiltered products={products} />} />

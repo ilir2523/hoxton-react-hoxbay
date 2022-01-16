@@ -103,6 +103,10 @@ img {
   text-decoration: underline;
 }
 
+.searach {
+  padding: 0.5rem;
+}
+
 /* Products Container */
 
 .products-container {

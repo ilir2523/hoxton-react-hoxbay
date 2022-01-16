@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 const randColour = () =>
   ["green", "red", "blue", "yellow"][Math.floor(Math.random() * 4)];
 
-function Header() {
+function Header({ filterProducts }) {
   return (
     <header
       className="header"
@@ -26,7 +26,14 @@ function Header() {
             <Link to='/basket' >Basket</Link>
             
           </li>
+          <li>
+          <input type="search" placeholder="Search product..."  className="searach" 
+          onChange={(e) => {
+            filterProducts(e.target.value)
+            console.log(e.target.value)}}/>
+        </li>
         </ul>
+        
       </nav>
     </header>
   );
