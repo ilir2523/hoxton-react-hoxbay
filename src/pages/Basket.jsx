@@ -1,18 +1,20 @@
-function Basket({ basketItems, setBasketItems}) {
+import { Link } from 'react-router-dom'
+
+function Basket({ basketItems, setBasketItems }) {
 
     function handleChange(item, e) {
         let basketItemsQty = JSON.parse(JSON.stringify(basketItems))
         const itemFound = basketItemsQty.find(function (basketItem) {
             return basketItem.id === item.id
-          })
-          itemFound.quantity = Number(e.target.value)
-          console.log(e.target.value)
+        })
+        itemFound.quantity = Number(e.target.value)
+        console.log(e.target.value)
 
-          if (itemFound.quantity === 0) {
+        if (itemFound.quantity === 0) {
             basketItemsQty = basketItemsQty.filter(function (basketItem) {
-              return basketItem.quantity > 0
+                return basketItem.quantity > 0
             })
-          }
+        }
 
         setBasketItems(basketItemsQty)
     }
@@ -22,7 +24,7 @@ function Basket({ basketItems, setBasketItems}) {
     function calculateTotalPrice() {
         let total = 0
         for (const item of basketItems) {
-          total = total + item.price * item.quantity
+            total = total + item.price * item.quantity
         }
         return total.toFixed(2)
     }
@@ -31,26 +33,28 @@ function Basket({ basketItems, setBasketItems}) {
         let total = 0
         total = total + item.price * item.quantity
         return total.toFixed(2)
-      }
+    }
 
     return (
         <section className="basket-container">
             <h2>Your Basket</h2>
             <ul>
-                {basketItems.map(basketItem => 
+                {basketItems.map(basketItem =>
                     <li key={basketItem.id}>
                         <article className="basket-container__item">
-                            <img
-                                src={basketItem.image}
-                                alt={basketItem.title}
-                                width="90"
-                            />
+                            <Link to={`/products/${basketItem.id}`}>
+                                <img
+                                    src={basketItem.image}
+                                    alt={basketItem.title}
+                                    width="90"
+                                />
+                            </Link>
                             <p>{basketItem.title}</p>
                             <p>
                                 Qty:
                                 <select value={basketItem.quantity} onChange={(e) => {
                                     handleChange(basketItem, e)
-                                    } }>
+                                }}>
                                     <option value="0">0</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
