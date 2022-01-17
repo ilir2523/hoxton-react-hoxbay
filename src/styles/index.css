@@ -206,7 +206,7 @@ img {
 .categories-container__list a {
   display: grid;
   height: 300px;
-  /* background-color: var(--random-colour) !important; */
+  background-color: var(--random-colour);
   place-items: center;
   text-transform: capitalize;
   text-align: center;

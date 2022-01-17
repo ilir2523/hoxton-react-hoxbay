@@ -5,7 +5,7 @@ export default function Category({ category }) {
     ["green", "red", "blue", "yellow"][Math.floor(Math.random() * 4)];
 
     return (
-        <Link to={`/categories/${category.id}`}  style={{ backgroundColor: `var(--${randColour()})` }}>
+        <Link to={`/categories/${category.id}`}  style={{ '--random-colour': `var(--${randColour()})` }}>
             <li key={category.id}>
                 {category.name}
             </li>
