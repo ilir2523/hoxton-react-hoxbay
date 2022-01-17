@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
-const randColour = () =>
-  ["green", "red", "blue", "yellow"][Math.floor(Math.random() * 4)]
 
 function ProductDetails({ addToBasket }) {
   const params = useParams()
@@ -26,8 +24,7 @@ function ProductDetails({ addToBasket }) {
           alt={product.title}
         />
 
-      <div className="product-detail__side" style={{ ["--border-colour"]: `var(--${randColour()})` }}>
-        <h3></h3>
+      <div className="product-detail__side">
         <h2>{product.title}</h2>
         <p>
           {product.description}
