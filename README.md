@@ -1,0 +1,2 @@
+- Run npx json-server --watch db/db.json --routes db/routes.json to launch your database server
+- Run npm install and npm run start to use the frontend.

@@ -20,26 +20,36 @@ function App() {
 
   const [basketItems, setBasketItems] = useState([])
 
-  // console.log(basketItems)
+  useEffect(() => {
+    fetch('http://localhost:3000/baskets')
+      .then(resp => resp.json())
+      .then(basketsFromServer => setBasketItems(basketsFromServer))
+  }, [])
 
-  function addToBasket(item) {
-    const basketItemsList = [...basketItems]
-    const itemFound = basketItemsList.find(function (basketItem) {
-      return basketItem.id === item.id
-    })
-    if (itemFound === undefined) {
-      const newBasketItem = {
+  console.log(basketItems)
+
+  function postOnServerBasket(item) {
+    fetch('http://localhost:3000/baskets', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
         id: item.id,
         title: item.title,
         price: item.price,
         description: item.description,
         categoryId: item.categoryId,
         image: item.image,
-        quantity: 1
-      }
-      basketItemsList.push(newBasketItem)
-    }
-    setBasketItems(basketItemsList)
+        quantity: 1,
+        userId: 1
+      })
+    }).then(resp => resp.json())
+      .then((newItem) => {
+        const copyBasketItems = JSON.parse(JSON.stringify(basketItems))
+        copyBasketItems.push(newItem)
+        setBasketItems(copyBasketItems)
+      })
   }
 
   function filterProducts(searchValue) {
@@ -61,7 +71,7 @@ function App() {
         <Routes>
           <Route index element={<Navigate to='/products' />} />
           <Route path='/products' element={<Products products={products} />} />
-          <Route path='/products/:id' element={<ProductDetails addToBasket={addToBasket} />} />
+          <Route path='/products/:id' element={<ProductDetails postOnServerBasket={postOnServerBasket} />} />
 
           <Route path='/categories' element={<Categories />} />
           <Route path='/categories/:id' element={<CategoriesFiltered />} />

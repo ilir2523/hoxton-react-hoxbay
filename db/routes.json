@@ -1,0 +1,5 @@
+{
+    "/users": "/users?_embed=baskets",
+    "/users/*": "/users/$1?_embed=baskets"
+  }
+  

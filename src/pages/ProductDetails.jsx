@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
 
-function ProductDetails({ addToBasket }) {
+function ProductDetails({ postOnServerBasket }) {
   const params = useParams()
 
   const [product, setProduct] = useState(null)
@@ -32,7 +32,7 @@ function ProductDetails({ addToBasket }) {
         <p>£{product.price}</p>
         {/* <!-- Once you click in this button, the user should be redirected to the Basket page --> */}
         <Link to='/basket'>
-          <button onClick={() => addToBasket(product)}>Add to basket</button>
+          <button onClick={() => postOnServerBasket(product)}>Add to basket</button>
         </Link>
       </div>
     </section>

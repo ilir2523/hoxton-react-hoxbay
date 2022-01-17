@@ -3,6 +3,21 @@ import { Link } from 'react-router-dom'
 function Basket({ basketItems, setBasketItems }) {
 
     function handleChange(item, e) {
+        if (Number(e.target.value) > 0) {
+            fetch(`http://localhost:3000/baskets/${item.id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    quantity: Number(e.target.value)
+                })
+            })
+        } else if (Number(e.target.value) === 0) {
+            fetch(`http://localhost:3000/baskets/${item.id}`, {
+                method: 'DELETE'
+            })
+        }
         let basketItemsQty = JSON.parse(JSON.stringify(basketItems))
         const itemFound = basketItemsQty.find(function (basketItem) {
             return basketItem.id === item.id
@@ -17,8 +32,6 @@ function Basket({ basketItems, setBasketItems }) {
 
         setBasketItems(basketItemsQty)
     }
-
-    // console.log(basketItems)
 
     function calculateTotalPrice() {
         let total = 0
