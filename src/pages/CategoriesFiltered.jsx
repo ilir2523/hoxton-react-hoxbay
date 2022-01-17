@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import Product from "../components/Product"
+import NotFound from "./NotFound"
 
 function CategoriesFiltered() {
     const params = useParams()
@@ -12,6 +13,8 @@ function CategoriesFiltered() {
       .then(resp => resp.json())
       .then(productsFromServer => setProducts(productsFromServer))
   }, [])
+
+  if (products.length === 0) return <NotFound />
 
     return (
         <section className="products-container main-wrapper">

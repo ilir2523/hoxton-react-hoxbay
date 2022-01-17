@@ -8,7 +8,6 @@ function Basket({ basketItems, setBasketItems }) {
             return basketItem.id === item.id
         })
         itemFound.quantity = Number(e.target.value)
-        console.log(e.target.value)
 
         if (itemFound.quantity === 0) {
             basketItemsQty = basketItemsQty.filter(function (basketItem) {

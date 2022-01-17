@@ -64,7 +64,7 @@ function App() {
           <Route path='/products/:id' element={<ProductDetails addToBasket={addToBasket} />} />
 
           <Route path='/categories' element={<Categories />} />
-          <Route path='/categories/:id' element={<CategoriesFiltered products={products} />} />
+          <Route path='/categories/:id' element={<CategoriesFiltered />} />
           <Route path='/basket' element={<Basket basketItems={basketItems} setBasketItems={setBasketItems} />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
